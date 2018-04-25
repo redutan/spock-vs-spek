@@ -14,7 +14,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
 object MemberServiceSpec : Spek({
-    describe("주체 조회") {
+    describe("인증 주체 조회 테스트") {
         val memberRepository: MemberRepository = mock()
         val service = MemberService(memberRepository)
 
