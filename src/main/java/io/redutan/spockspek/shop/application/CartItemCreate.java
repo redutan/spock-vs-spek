@@ -4,7 +4,7 @@ import lombok.NonNull;
 import lombok.Value;
 
 @Value
-class CartItemDto {
+class CartItemCreate {
     @NonNull
     private Long productId;
     private int quantity;

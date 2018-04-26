@@ -20,19 +20,19 @@ public class CartService {
     }
 
     @Transactional
-    public Cart addCart(Collection<CartItemDto> cartItemDtos) {
-        Cart cart = createCart(cartItemDtos);
+    public Cart addCart(Collection<CartItemCreate> cartItemCreates) {
+        Cart cart = createCart(cartItemCreates);
         return cartRepository.save(cart);
     }
 
-    private Cart createCart(Collection<CartItemDto> cartItemDtos) {
-        List<CartItem> items = cartItemDtos.stream()
+    private Cart createCart(Collection<CartItemCreate> cartItemCreates) {
+        List<CartItem> items = cartItemCreates.stream()
                 .map(this::toCartItem)
                 .collect(Collectors.toList());
         return new Cart(items);
     }
 
-    private CartItem toCartItem(CartItemDto dto) {
+    private CartItem toCartItem(CartItemCreate dto) {
         Product product = productRepository.findById(dto.getProductId())
                 .orElseThrow(ProductNotFoundException::new);
         return new CartItem(product, dto.getQuantity());
