@@ -19,7 +19,7 @@ import static org.junit.Assert.assertThat;
  * 50000 ~ : 20%
  */
 @SuppressWarnings("WeakerAccess")
-@RunWith(Parameterized.class)   // 파라메터화된 테스트를 위한 선언
+@RunWith(Parameterized.class)   // 파라메터화된 테스트를 위한 선언 - 즉 data 별로 하나의 클래스만 가능 (메서드 별로 불가능)
 public class RefundServiceJunit4Test {
     // @Parameter로 주입 시 public 으로 선언되어야 한다.
     @Parameter()   // data() 항 항목의 첫번째 인자

@@ -10,9 +10,9 @@ import spock.lang.Specification
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
-@SpringBootTest
+@SpringBootTest // 부트 통합 공식 지원
 class CartServiceSpockIntegTest extends Specification {
-    @Autowired
+    @Autowired  // 타입으로 DI 받기 위해서 def가 아닌 타입을 명시함
     ProductRepository productRepository
     @Autowired
     CartService service
@@ -30,6 +30,7 @@ class CartServiceSpockIntegTest extends Specification {
                 new Product("색연필", 1_000),
                 new Product("휴대폰", 900_000)
         ])
+        // persistenceUnitUtil = entityManager.getEntityManagerFactory().getPersistenceUnitUtil();
         persistenceUnitUtil = entityManager.entityManagerFactory.persistenceUnitUtil
     }
 
@@ -48,6 +49,7 @@ class CartServiceSpockIntegTest extends Specification {
     }
 
     def givenCartItemCreates() {
-        return products.collect { p -> new CartItemCreate(p.productId, 1) }
+        // it = default lambda argument
+        return products.collect { new CartItemCreate(it.productId, 1) }
     }
 }

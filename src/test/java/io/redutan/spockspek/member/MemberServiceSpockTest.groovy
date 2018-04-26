@@ -12,6 +12,7 @@ class MemberServiceSpockTest extends Specification {
     def username = "userId"
     def role1 = "USER1"
 
+    // @Before
     def setup() {
         memberRepository = Mock(MemberRepository)
         service = new MemberService(memberRepository)
@@ -25,7 +26,8 @@ class MemberServiceSpockTest extends Specification {
         def userDetails = service.loadUserByUsername(username)
 
         then:
-        1 * memberRepository.findById(username) >> Optional.of(member)
+        // verify + when(memberRepository.findById(username).thenReturn(Optional.empty())
+        memberRepository.findById(username) >> Optional.of(member)
         userDetails.username == username
         userDetails.password != null
         userDetails.authorities.first().authority == "ROLE_${role1}"
@@ -36,6 +38,7 @@ class MemberServiceSpockTest extends Specification {
         service.loadUserByUsername(username)
 
         then:
+        // verify 1 times + when(memberRepository.findById(any())).thenReturn(Optional.empty())
         1 * memberRepository.findById(_) >> Optional.empty()
         thrown UsernameNotFoundException
     }

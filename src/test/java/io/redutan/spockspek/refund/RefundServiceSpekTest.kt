@@ -1,21 +1,13 @@
 package io.redutan.spockspek.refund
 
-import com.nhaarman.mockito_kotlin.reset
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
-import io.github.benas.randombeans.api.EnhancedRandom.random
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
-import org.springframework.security.core.userdetails.UsernameNotFoundException
-import java.util.*
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNotNull
 
 object RefundServiceSpec : Spek({
+    // Value Object + Not Null Fields
     data class RefundTestData(val order: Order, val fee: Long)
 
     describe("환불 수수료 테스트") {
@@ -26,6 +18,7 @@ object RefundServiceSpec : Spek({
                 RefundTestData(Order(49999L), 4999L),
                 RefundTestData(Order(50000L), 10000L)
         )
+        // 메서드 별로 각각 parameterized 테스트 가능
         datas.forEach { data ->
             on("주문액이 ${data.order.amount} 이면") {
                 val fee = service.getRefundFee(data.order)

@@ -13,29 +13,39 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
+// object = singleton
 object MemberServiceSpec : Spek({
+    // void describe(String, Supplier<SpecBody>)
+    // describe("", () -> { })
+    // describe("", { })
+    // describe("") { }
+    // Given
     describe("인증 주체 조회 테스트") {
         val memberRepository: MemberRepository = mock()
+        // MemberService service = new MemberService(memberRepository);
         val service = MemberService(memberRepository)
 
         val username = "userId"
         val role1 = "USER1"
-
+        // @Before
         beforeEachTest {
             reset(memberRepository)
         }
+        // When
         on("정상 조회 시") {
             val member = Member(username, random(String::class.java), role1)
+            // when stubbing
             whenever(memberRepository.findById(username)).thenReturn(Optional.of(member))
 
             val user = service.loadUserByUsername(username)
-
+            // Then
             it("정상적으로 조회 성공되어야함") {
                 assertNotNull(user)
                 assertEquals(user.username, username)
                 assertNotNull(user.password)
                 assertEquals(user.authorities.first().authority, "ROLE_$role1")
             }
+            // Then
             it("하위 모듈이 정상적으로 호출되어야함") {
                 verify(memberRepository, times(1)).findById(username)
             }

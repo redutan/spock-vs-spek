@@ -40,10 +40,8 @@ public class MemberServiceJunit4Test {
         // given
         Member member = new Member(username, random(String.class), role1);
         when(memberRepository.findById(username)).thenReturn(Optional.of(member));
-
         // when
         UserDetails userDetails = service.loadUserByUsername(username);
-
         // then
         assertThat(userDetails.getUsername(), is(username));
         assertThat(userDetails.getPassword(), is(notNullValue()));
@@ -59,10 +57,8 @@ public class MemberServiceJunit4Test {
         final String username = "userId";
 
         when(memberRepository.findById(username)).thenReturn(Optional.empty());
-
         // when
         service.loadUserByUsername(username);
-
         // then
         verify(memberRepository, times(1)).findById(username);
     }
@@ -75,10 +71,8 @@ public class MemberServiceJunit4Test {
 
         Member noAuthorityMember = new Member(username, random(String.class), null);
         when(memberRepository.findById(username)).thenReturn(Optional.of(noAuthorityMember));
-
         // when
         service.loadUserByUsername(username);
-
         // then
         verify(memberRepository, times(1)).findById(username);
     }

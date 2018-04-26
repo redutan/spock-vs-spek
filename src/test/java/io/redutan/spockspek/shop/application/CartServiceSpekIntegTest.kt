@@ -14,15 +14,12 @@ import kotlin.test.assertTrue
 
 @SpringBootTest
 object CartServiceSpekIntegTest : Spek({
+    // speck-spring 통합은 공식지원되지 않고 있으나, 공식 사이트에 프로젝트는 존재함
     val context = createContext(CartServiceSpekIntegTest::class)
+    // productRepository는 bean아니라 Wrapping한 memoize(함수형 캐싱)
     val productRepository = context.inject<ProductRepository>()
     val service = context.inject<CartService>()
     val entityManager = context.inject<EntityManager>()
-
-    fun givenCartItemCreates(products: List<Product>): List<CartItemCreate> {
-        return products
-                .map({ p -> CartItemCreate(p.productId, 1) })
-    }
 
     describe("addCart") {
         productRepository().deleteAll()
@@ -32,9 +29,11 @@ object CartServiceSpekIntegTest : Spek({
                 Product("색연필", 1000),
                 Product("휴대폰", 900000)
         ))
+        // persistenceUnitUtil = entityManager.getEntityManagerFactory().getPersistenceUnitUtil();
         val persistenceUnitUtil = entityManager().entityManagerFactory.persistenceUnitUtil
 
-        val cartItemCreates = givenCartItemCreates(products)
+        // it = default lambda argument
+        val cartItemCreates = products.map({ CartItemCreate(it.productId, 1) })
 
         on("장바구니에 상품들 추가") {
             val result = service().addCart(cartItemCreates)

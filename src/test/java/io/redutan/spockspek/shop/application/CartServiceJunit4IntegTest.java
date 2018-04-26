@@ -67,9 +67,4 @@ public class CartServiceJunit4IntegTest {
                 .map(p -> new CartItemCreate(p.getProductId(), 1))
                 .collect(Collectors.toList());
     }
-
-//    @After
-//    public void tearDown() throws Exception {
-//        productRepository.deleteAll();
-//    }
 }
