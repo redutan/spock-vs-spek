@@ -20,6 +20,7 @@ object RefundServiceSpec : Spek({
         )
         // 메서드 별로 각각 parameterized 테스트 가능
         datas.forEach { data ->
+            // String template : ${name}
             on("주문액이 ${data.order.amount} 이면") {
                 val fee = service.getRefundFee(data.order)
 

@@ -7,6 +7,7 @@ class RefundServiceSpockTest extends Specification {
     def service = new RefundService()
 
     // data-driven test
+    // String template : #name
     @Unroll("GetRefundFee 주문액이 #amount 이면 환불수수료는 #fee 이어야한다.") // 순차적으로 실행
     def getRefundFee() {
         expect:

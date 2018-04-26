@@ -33,6 +33,7 @@ class MemberServiceSpockTest extends Specification {
         userDetails.authorities.first().authority == "ROLE_${role1}"
     }
 
+    // 메서드 문자열로 표현 가능
     def "LoadUserByUsername - Not found member"() {
         when:
         service.loadUserByUsername(username)

@@ -19,8 +19,12 @@ object MemberServiceSpec : Spek({
     // describe("", () -> { })
     // describe("", { })
     // describe("") { }
-    // Given
+    // Given : 문자열로 표현 가능
     describe("인증 주체 조회 테스트") {
+        // val = value = immutable
+        // var = variant = mutable
+        // val memberRepository: MemberRepository? > nullable
+        // val memberRepository: MemberRepository > non-nullable
         val memberRepository: MemberRepository = mock()
         // MemberService service = new MemberService(memberRepository);
         val service = MemberService(memberRepository)
@@ -31,7 +35,7 @@ object MemberServiceSpec : Spek({
         beforeEachTest {
             reset(memberRepository)
         }
-        // When
+        // When : 또한 문자열로 표현 가능
         on("정상 조회 시") {
             val member = Member(username, random(String::class.java), role1)
             // when stubbing
@@ -45,7 +49,7 @@ object MemberServiceSpec : Spek({
                 assertNotNull(user.password)
                 assertEquals(user.authorities.first().authority, "ROLE_$role1")
             }
-            // Then
+            // Then : 또한 문자열로 표현 가능
             it("하위 모듈이 정상적으로 호출되어야함") {
                 verify(memberRepository, times(1)).findById(username)
             }
